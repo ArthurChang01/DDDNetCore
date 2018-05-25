@@ -1,5 +1,6 @@
 ﻿using Auth.Models;
 using Auth.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,7 @@ namespace Auth.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpPost("/Auth/Login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO model)
         {
@@ -51,6 +53,7 @@ namespace Auth.Controllers
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
         }
 
+        [AllowAnonymous]
         [HttpPost("/Auth/Register")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO model)
         {

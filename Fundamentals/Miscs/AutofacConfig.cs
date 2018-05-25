@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Autofac.Core.Activators.Reflection;
-using MakeUps;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +19,7 @@ namespace Fundamentals.Miscs
 
         public static ContainerBuilder RegisterComponent(IServiceCollection services, ContainerBuilder builder, string boundedContext)
         {
-            assemblies = new IConst[] { new OrderConst(services), new MakeUpConst(services) };
+            assemblies = new IConst[] { new OrderConst(services) };
             RegisterStoreComponent(builder, boundedContext);
             return builder;
         }
@@ -58,7 +57,8 @@ namespace Fundamentals.Miscs
                     });
                     rabbit.ExchangeType = ExchangeType.Fanout;
 
-                    if (assemblies.First(o => o.Name.Equals(boundedContext)).Receiver.Count > 0)
+                    if (assemblies.Any(o => o.Name.Equals(boundedContext)) &&
+                    assemblies.First(o => o.Name.Equals(boundedContext)).Receiver.Count > 0)
                         rabbit.ReceiveEndpoint(host, "Services", e => e.LoadFrom(c));
                 });
             })

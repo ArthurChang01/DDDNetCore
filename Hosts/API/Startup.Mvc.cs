@@ -2,6 +2,7 @@
 using Fundamentals.Miscs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +20,12 @@ namespace API
                           .AllowAnyHeader()
                           .AllowAnyOrigin())
                 )
-                .AddMvcCore()
+                .AddMvcCore(cfg =>
+                {
+                    cfg.Filters.Add(
+                        new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build())
+                    );
+                })
                 .AddAuthorization()
                 .AddApiExplorer()
                 .AddJsonFormatters(o =>
@@ -37,7 +43,6 @@ namespace API
 
             if (!this.HostEnvironment.IsDevelopment())
                 builder
-                    .AddMvcOptions(o => o.Filters.Add(typeof(AuthorizeAttribute)))
                     .AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>());
         }
     }

@@ -1,5 +1,4 @@
-﻿using MakeUps;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Orders;
 
@@ -9,7 +8,7 @@ namespace API
     {
         public void ConfigureMediatR(IServiceCollection services)
         {
-            var arAssembly = new[] { typeof(OrderConst), typeof(MakeUpConst) };
+            var arAssembly = new[] { typeof(OrderConst) };
 
             services.AddMediatR(arAssembly);
         }

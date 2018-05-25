@@ -12,10 +12,9 @@ namespace Fundamentals.Filters
         public void Apply(Operation operation, OperationFilterContext context)
         {
             var filterPipeline = (context.ApiDescription.ActionDescriptor as ControllerActionDescriptor).MethodInfo.CustomAttributes;
-            var isAuthorized = filterPipeline.Any(o => o.AttributeType == typeof(AuthorizeAttribute));
             var allowAnonymous = filterPipeline.Any(o => o.AttributeType == typeof(AllowAnonymousAttribute));
 
-            if (isAuthorized && !allowAnonymous)
+            if (!allowAnonymous)
             {
                 if (operation.Parameters == null)
                     operation.Parameters = new List<IParameter>();

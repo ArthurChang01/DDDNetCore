@@ -47,8 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BoundedContexts\Product\Orders.csproj" />
-    <ProjectReference Include="..\..\BoundedContexts\Sales\MakeUps.csproj" />
+    <ProjectReference Include="..\..\BoundedContexts\Orders\Orders.csproj" />
     <ProjectReference Include="..\..\Fundamentals\Fundamentals.csproj" />
   </ItemGroup>
 </Project>

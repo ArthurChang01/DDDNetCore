@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Fundamentals.Middlewares;
+using MassTransit;
+using MassTransit.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -70,7 +72,32 @@ namespace Auth
             app.UseAuthentication();
             app.UseMvc();
 
-            appLifetime.ApplicationStopping.Register(() => this.ApplicationContainer.Dispose());
+            var busHandle = ConnectRabbitMQ();
+
+            appLifetime.ApplicationStopping.Register(() =>
+            {
+                busHandle.Stop();
+                this.ApplicationContainer.Dispose();
+            });
+        }
+
+        private BusHandle ConnectRabbitMQ()
+        {
+            BusHandle busHandle = null;
+
+            var bus = this.ApplicationContainer.Resolve<IBusControl>();
+            byte errorCounter = 0;
+            while (busHandle == null && errorCounter < 5)
+            {
+                errorCounter++;
+                try
+                {
+                    busHandle = TaskUtil.Await(() => bus.StartAsync());
+                }
+                catch (Exception) { }
+            }
+
+            return busHandle;
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using SharedKernel.Interfaces;
+﻿using SharedKernel.BaseClasses;
+using SharedKernel.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace SharedKernel.IntegrationEvents.Orders
 {
-    public class OrderCanceledEvent : IEvent
+    public class OrderCanceledEvent : ValueObject,IEvent
     {
         public OrderCanceledEvent(int versionNo, string ordereId)
         {
@@ -17,5 +19,11 @@ namespace SharedKernel.IntegrationEvents.Orders
         public int VersionNo { get; }
 
         public string OrderId { get; }
+
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            yield return this.VersionNo;
+            yield return this.OrderId;
+        }
     }
 }

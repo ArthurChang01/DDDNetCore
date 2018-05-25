@@ -1,24 +1,44 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UnitTests\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="AutoFixture.AutoNSubstitute" Version="4.3.0" />
     <PackageReference Include="FluentAssertions" Version="5.3.0" />
     <PackageReference Include="LightBDD.NUnit3" Version="2.3.6" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
     <PackageReference Include="NSubstitute" Version="3.1.0" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BoundedContexts\Orders\Product.csproj" />
+    <ProjectReference Include="..\..\BoundedContexts\Orders\Orders.csproj" />
+    <ProjectReference Include="..\..\Hosts\API\API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="IntegrationTests\AddOrder\AddOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="IntegrationTests\AddOrder\AddOrder.Steps.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="IntegrationTests\CancelOrder\CancelOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="IntegrationTests\CancelOrder\CancelOrder.Steps.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="IntegrationTests\ChangeOrder\ChangeOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="IntegrationTests\ChangeOrder\ChangeOrder.Steps.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

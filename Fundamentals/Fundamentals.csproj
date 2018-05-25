@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BoundedContexts\Product\Orders.csproj" />
-    <ProjectReference Include="..\BoundedContexts\Sales\MakeUps.csproj" />
+    <ProjectReference Include="..\BoundedContexts\Orders\Orders.csproj" />
     <ProjectReference Include="..\Commons\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
